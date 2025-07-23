@@ -4,7 +4,7 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// 🟢 REGISTER Route
+// REGISTER Route
 router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -20,7 +20,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// 🔵 LOGIN Route
+// LOGIN Route
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -31,7 +31,7 @@ router.post('/login', async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
 
-    // ✅ Create JWT Token
+    // Create JWT Token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
@@ -42,9 +42,10 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// get all user 
 router.get('/users', async (req, res) => {
   try {
-    const users = await User.find({}, 'name email password'); // 👈 Only specific fields
+    const users = await User.find({}, 'name email password');  
     res.json(users);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch users' });
