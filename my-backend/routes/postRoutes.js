@@ -22,7 +22,7 @@ router.post('/create', auth, async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/getAll', async (req, res) => {
   try {
     const posts = await Post.find().populate('author', 'name email'); // Optional: populate author
     res.json(posts);

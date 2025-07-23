@@ -7,13 +7,13 @@ dotenv.config(); // Load environment variables
 
 const app = express();
 
-// ✅ Middleware to parse JSON request bodies
+//  Middleware to parse JSON request bodies
 app.use(express.json());
 
-// ✅ Connect to MongoDB
+//  Connect to MongoDB
 connectDB();
 
-// ✅ Route setup — register API
+// Route setup — register API
 app.use('/api/auth', require('./routes/authRoutes')); // Mount auth routes
 
 // Optional test route
@@ -22,8 +22,8 @@ app.get('/', (req, res) => {
 });
 
 app.use(express.json()); // Make sure this is there
-app.use('/api/posts', postRoutes); // 👈 Add this
-  
+app.use('/api/posts', postRoutes);
+   
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
