@@ -42,4 +42,13 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get('/users', async (req, res) => {
+  try {
+    const users = await User.find({}, 'name email password'); // 👈 Only specific fields
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch users' });
+  }
+});
+
 module.exports = router;
