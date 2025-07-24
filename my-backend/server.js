@@ -17,7 +17,7 @@ connectDB();
 app.use('/api/auth', require('./routes/authRoutes')); // Mount auth routes
 
 // Optional test route
-app.get('/', (req, res) => {
+app.get('/', (req, res) => { 
   res.send('Server is running and connected to MongoDB!');
 });
 
