@@ -1,9 +1,19 @@
-var express = require('express');
-var router = express.Router();
+const mongoose = require('mongoose');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect("mongodb://127.0.0.1:27017/yourdbname");
+    console.log(`MongoDB connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.error('MongoDB connection FAILED:', error.message);
+    process.exit(1);
+  }
+};
 
-module.exports = router;
+mongoose.Schema({
+  name: String,
+  username: String,
+  category: String
+})
+
+module.exports = connectDB;
