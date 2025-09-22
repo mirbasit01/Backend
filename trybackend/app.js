@@ -6,7 +6,8 @@ var logger = require('morgan');
 const flash = require("connect-flash");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var session = require('express-session')
+var session = require('express-session');
+const passport = require('passport');
 var app = express();
 
 // view engine setup
@@ -17,6 +18,11 @@ app.use(session({
   saveUninitialized: false,
   secret: 'kkdmkj84eij8cssdjnj39dncw8n'
 }))
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(usersRouter.serializeUser());
+passport.deserializeUser(usersRouter.deserializeUser());
 
 // Flash middleware
 app.use(flash());
