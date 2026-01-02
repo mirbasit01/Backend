@@ -12,8 +12,19 @@ const hadleGenerateShortUrl = async (req , res) => {
         redirectURL: body.url,
         visitHistory: []
     });
-    return res.json({ id: shortId });
+    const shortUrl = `http://localhost:8000/${shortId}`;
+    return res.render('home', { shortUrl });
+};
 
+const hadleAnalytics = async (req , res) => {
+    const { shortId } = req.params;
+    const result = await URL.findOne({ shortId });
+    if(!result) return res.status(404).json({ error: "URL not found"})
+    return res.json({ 
+        totalClicks: result.visitHistory.length,
+        analytics: result.visitHistory
+    });
 }
 
-module.exports = { hadleGenerateShortUrl }
+
+module.exports = { hadleGenerateShortUrl , hadleAnalytics}
