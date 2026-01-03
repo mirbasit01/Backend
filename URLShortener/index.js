@@ -22,9 +22,18 @@ const userRoute = require("./routes/user")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Set CSP headers
+app.use((req, res, next) => {
+    res.setHeader('Content-Security-Policy', 
+        "default-src 'self'; font-src 'self' https://fonts.gstatic.com; connect-src 'self';");
+    next();
+});
+
 app.use('/url' , urlRoute)
 app.use('/user' , userRoute)
 app.use('/' , staticRoute)
+
 
 
 app.set('view engine', 'ejs');
