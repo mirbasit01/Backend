@@ -6,4 +6,7 @@ router.post('/' , hadleGenerateShortUrl)
 
 router.get('/analytics/:shortId', hadleAnalytics);
 
+
+
+
 module.exports = router;

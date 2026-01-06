@@ -1,7 +1,7 @@
 
 const User = require("../models/user");
-
-
+const {v4: uuidv4} = require('uuid')
+const {setUser} = require('../service/auth')
 const hadleuserRegister = async (req, res) => {
     const { name, email, password } = req.body;
 
@@ -20,32 +20,26 @@ const hadleuserRegister = async (req, res) => {
 }
 
 
-
-
-
-const handleGetAlluser = async (req, res) => {
-    const allUsers = await User.find({});
-    return res.json(allUsers);
-}
-
-const handleGetUserById = async (req, res) => {
-    const user = await User.findById(req.params.id);
-
-    if (!user) return res.status(404).json({ error: "No user found" });
-    return res.json(user);
-}
-
-const handleDeletuser = async (req, res) => {
-  const user =  await User.findByIdAndDelete(req.params.id);
-  if(!user) return res.return(404).json({error: "No user found"});
-  return res.json({message: "User deleted successfully"});
+const hadleuserLogin = async (req, res) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email, password })
+    console.log(user, ' : user form login ')
+    if (!user) return res.render('login', { error: 'Invalid username or password' });
+    const sessionId = uuidv4();
+    setUser(sessionId, user)
+    res.cookie('uid', sessionId)
+    return res.redirect('/')
 
 }
+
+
+
+
+
+
 
 module.exports = {
     hadleuserRegister,
-    handleGetAlluser,
-    handleGetUserById,
-    handleDeletuser
+    hadleuserLogin
 
 }

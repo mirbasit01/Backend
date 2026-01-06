@@ -10,7 +10,8 @@ const hadleGenerateShortUrl = async (req , res) => {
     await URL.create({
         shortId: shortId,
         redirectURL: body.url,
-        visitHistory: []
+        visitHistory: [],
+        createdBy: req.user._id
     });
     const shortUrl = `http://localhost:8000/${shortId}`;
     return res.render('home', { shortUrl });
