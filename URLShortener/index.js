@@ -6,7 +6,7 @@ const URL = require('./models/url');
 const PORT = 8000;
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const { restrictToLoggedInUserOnly , checkAuth} = require('./middleware/auth');
+const { restrictToLoggedInUserOnly, checkAuth } = require('./middleware/auth');
 
 // connect to database
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/URLShortener';
@@ -26,6 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
 // Set CSP headers
 app.use((req, res, next) => {
     res.setHeader('Content-Security-Policy',
@@ -33,9 +34,9 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/url', restrictToLoggedInUserOnly,  urlRoute)
-app.use('/user',  userRoute)
-app.use('/',checkAuth, staticRoute)
+app.use('/url', restrictToLoggedInUserOnly, urlRoute)
+app.use('/user', userRoute)
+app.use('/', checkAuth, staticRoute)
 
 
 

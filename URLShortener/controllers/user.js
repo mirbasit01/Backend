@@ -25,10 +25,9 @@ const hadleuserLogin = async (req, res) => {
     const user = await User.findOne({ email, password })
     console.log(user, ' : user form login ')
     if (!user) return res.render('login', { error: 'Invalid username or password' });
-    const sessionId = uuidv4();
-    setUser(sessionId, user)
-    res.cookie('uid', sessionId)
-    return res.redirect('/')
+    const token = setUser(user)
+    // res.cookie('uid', token)
+    return res.json({ token })
 
 }
 
